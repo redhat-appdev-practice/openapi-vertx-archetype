@@ -1,3 +1,0 @@
-[submodule "templates/springboot-jpa"]
-	path = templates/springboot-jpa
-	url = https://github.com/redhat-appdev-practice/spring-data-openapi-templates.git
