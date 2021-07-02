@@ -36,3 +36,8 @@ mvn archetype:generate -DarchetypeGroupId=com.zanclus.openapi.vertx \
 - Allow to choose between basic Vert.x style callbacks, RxJava2, and Mutiny for async APIs
 - Enable generating the Vert.x Web API Contract MainVerticle
 - Add your idea to the GitHub issues!!!
+
+## FAQ
+
+- Why does it generate a Multi-module Maven project instead of a simple single Maven project?
+  - This is a limitation of the jOOQ JPA generator and I found that I liked it this way anyhow.
