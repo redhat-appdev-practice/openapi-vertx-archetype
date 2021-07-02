@@ -16,9 +16,9 @@ mvn archetype:generate -DarchetypeGroupId=com.zanclus.openapi.vertx \
                        -DgroupId=com.redhat.runtimes.vertx \
                        -DartifactId=vertx-cms \
                        -Dversion=0.0.1-SNAPSHOT \
-                       -Dopenapi.app.useHibernateReactive=true \
-                       -Dopenapi.app.useJavaObjectOrientedQuery=false \
-                       -Dopenapi.app.contract.uri=https://studio-ws.apicur.io/sharing/fb9d632f-6777-44c6-a22e-0a33d88a1d52?content=true \
+                       -Dopenapi_app_useHibernateReactive=true \
+                       -Dopenapi_app_useJavaObjectOrientedQuery=false \
+                       -Dopenapi_app_contract_uri=https://studio-ws.apicur.io/sharing/fb9d632f-6777-44c6-a22e-0a33d88a1d52?content=true \
                        -Dinteractive=false
 ```
 
