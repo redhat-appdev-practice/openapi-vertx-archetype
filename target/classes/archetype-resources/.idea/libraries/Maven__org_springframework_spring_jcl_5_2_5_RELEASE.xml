@@ -1,0 +1,16 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<component name="libraryTable">
+  <library name="Maven: org.springframework:spring-jcl:5.2.5.RELEASE">
+    <CLASSES>
+      <root url="jar://${symbol_dollar}MAVEN_REPOSITORY${symbol_dollar}/org/springframework/spring-jcl/5.2.5.RELEASE/spring-jcl-5.2.5.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://${symbol_dollar}MAVEN_REPOSITORY${symbol_dollar}/org/springframework/spring-jcl/5.2.5.RELEASE/spring-jcl-5.2.5.RELEASE-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://${symbol_dollar}MAVEN_REPOSITORY${symbol_dollar}/org/springframework/spring-jcl/5.2.5.RELEASE/spring-jcl-5.2.5.RELEASE-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

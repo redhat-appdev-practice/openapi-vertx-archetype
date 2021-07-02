@@ -1,0 +1,16 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<component name="libraryTable">
+  <library name="Maven: net.bytebuddy:byte-buddy:1.10.2">
+    <CLASSES>
+      <root url="jar://${symbol_dollar}MAVEN_REPOSITORY${symbol_dollar}/net/bytebuddy/byte-buddy/1.10.2/byte-buddy-1.10.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://${symbol_dollar}MAVEN_REPOSITORY${symbol_dollar}/net/bytebuddy/byte-buddy/1.10.2/byte-buddy-1.10.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://${symbol_dollar}MAVEN_REPOSITORY${symbol_dollar}/net/bytebuddy/byte-buddy/1.10.2/byte-buddy-1.10.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
