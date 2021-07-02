@@ -10,7 +10,7 @@ cd openapi-vertx-archetype
 mvn install
 cd <workspace>
 mvn archetype:generate -DarchetypeGroupId=com.zanclus.openapi.vertx \
-                       -DarchetypeArtifactId=vertx-openapi-jooq-archetype \
+                       -DarchetypeArtifactId=vertx-openapi-archetype \
                        -DarchetypeVersion=1.0-SNAPSHOT \
                        -Dpackage=com.redhat.runtimes \
                        -DgroupId=com.redhat.runtimes.vertx \
