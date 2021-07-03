@@ -134,7 +134,7 @@
                             <inputSpec>${openapi_app_contract_uri}</inputSpec>
                             <configOptions>
                                 <dateLibrary>java8-localdatetime</dateLibrary>
-                                <modelPackage>com.zanclus.openapi.vertx.models</modelPackage>
+                                <modelPackage>${package}.models</modelPackage>
                                 <parentArtifactId>${project.artifactId}</parentArtifactId>
                                 <parentGroupId>${project.groupId}</parentGroupId>
                                 <parentVersion>${project.version}</parentVersion>
