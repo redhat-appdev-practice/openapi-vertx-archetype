@@ -15,8 +15,6 @@ import io.vertx.core.Promise;
 import io.vertx.reactivex.core.AbstractVerticle;
 import io.vertx.core.Promise;
 #end
-import org.jooq.SQLDialect;
-import org.jooq.impl.DSL;
 
 /**
  * Main Vert.x Verticle, entrypoint for this application

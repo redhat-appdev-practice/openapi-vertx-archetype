@@ -35,11 +35,13 @@
       <artifactId>${rootArtifactId}-models</artifactId>
       <version>${version}</version>
     </dependency>
+#if($openapi_app_database_library == "jooq")
     <dependency>
       <groupId>${groupId}.data</groupId>
       <artifactId>${rootArtifactId}-data-access</artifactId>
       <version>${version}</version>
     </dependency>
+#end
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-core</artifactId>
