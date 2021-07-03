@@ -22,6 +22,32 @@ mvn archetype:generate -DarchetypeGroupId=com.redhat.runtimes \
                        -Dinteractive=false
 ```
 
+## Options
+
+* `package`
+  * The Java package name to be used as the basis for code
+* `groupId`
+  * The Maven groupId for the generated project
+* `artifactId`
+  * The Maven artifactId for the generated project
+* `version`
+  * The Maven version for the generated project
+* `openapi_app_contract_uri`
+  * The Path or URL to an OpenAPI specification file in either YAML or JSON format
+  * Examples:
+    * https://petstore.swagger.io/v2/swagger.yaml
+    * https://petstore.swagger.io/v2/swagger.json
+    * /local/path/to/my/openapi.yml
+* `openapi_app_database_library`
+  * The Data Access library to be enabled
+    * `jooq` - [jOOQ](https://jooq.org)
+    * `hibernate` - [Hibernate Reactive](http://hibernate.org/reactive/)
+* `openapi_app_async_library`=
+  * The Async coordination API to enable
+    * `vertx` - Used the built-in composable coordination
+    * `rxjava2` - ReactiveX Streams  
+    * `mutiny` - The SmallRye Mutiny API
+
 ## Current Status
 
 - Able to generate a maven multi-module project
