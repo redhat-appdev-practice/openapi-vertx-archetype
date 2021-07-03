@@ -55,8 +55,8 @@ mvn archetype:generate -DarchetypeGroupId=com.redhat.runtimes \
 - Generates JPA Entity classes from the OpenAPI contract
 - Generates jOOQ Query DSL classes from the Hibernate/JPA entities
 - Creates a *stub* Vert.x Main Verticle
-- Allow to choose between jOOQ and Hibernate Reactive
-- Allow to choose between basic Vert.x style callbacks, RxJava2, and Mutiny for async APIs
+- Allows you to choose between jOOQ and Hibernate Reactive
+- Allows you to choose between basic Vert.x style callbacks, RxJava2, and Mutiny for async APIs
 
 ## Forthcoming Features
 
