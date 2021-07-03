@@ -14,6 +14,9 @@
   <properties>
     <vertx-maven-plugin.version>1.0.22</vertx-maven-plugin.version>
     <vertx.version>4.1.1</vertx.version>
+#if($openapi_app_async_library == "mutiny")
+    <mutiny.version>2.8.0</mutiny.version>
+#end
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -32,11 +35,13 @@
       <artifactId>${rootArtifactId}-models</artifactId>
       <version>${version}</version>
     </dependency>
+#if($openapi_app_database_library == "jooq")
     <dependency>
       <groupId>${groupId}.data</groupId>
       <artifactId>${rootArtifactId}-data-access</artifactId>
       <version>${version}</version>
     </dependency>
+#end
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-core</artifactId>
@@ -50,11 +55,52 @@
       <artifactId>reactive-pg-client</artifactId>
       <version>0.11.4</version>
     </dependency>
+#if($openapi_app_async_library == "rxjava2")
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-rx-java2</artifactId>
+    </dependency>
+#end
+#if($openapi_app_async_library == "mutiny")
+    <dependency>
+      <groupId>io.smallrye.reactive</groupId>
+      <artifactId>smallrye-mutiny-vertx-core</artifactId>
+      <version>${mutiny.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.smallrye.reactive</groupId>
+      <artifactId>smallrye-mutiny-vertx-web</artifactId>
+      <version>${mutiny.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.smallrye.reactive</groupId>
+      <artifactId>smallrye-mutiny-vertx-web-openapi</artifactId>
+      <version>${mutiny.version}</version>
+    </dependency>
+#end
+#if(${openapi_app_database_library}=="jooq")
     <dependency>
       <groupId>io.github.jklingsporn</groupId>
       <artifactId>vertx-jooq-classic-reactive</artifactId>
       <version>6.2.0</version>
     </dependency>
+#else
+    <dependency>
+      <groupId>org.hibernate.reactive</groupId>
+      <artifactId>hibernate-reactive-core</artifactId>
+      <version>1.0.0.CR1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-jpamodelgen</artifactId>
+      <version>5.4.12.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>2.12.0</version>
+    </dependency>
+#end
   </dependencies>
   <build>
     <plugins>
@@ -73,7 +119,7 @@
         </executions>
         <configuration>
           <redeploy>true</redeploy>
-          <verticle>com.zanclus.openapi.vertx.api.MainVerticle</verticle>
+          <verticle>${package}.api.MainVerticle</verticle>
         </configuration>
       </plugin>
     </plugins>

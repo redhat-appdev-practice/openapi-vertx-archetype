@@ -9,15 +9,15 @@ git clone https://github.com/redhat-appdev-practice/openapi-vertx-archetype.git
 cd openapi-vertx-archetype
 mvn install
 cd <workspace>
-mvn archetype:generate -DarchetypeGroupId=com.zanclus.openapi.vertx \
+mvn archetype:generate -DarchetypeGroupId=com.redhat.runtimes \
                        -DarchetypeArtifactId=vertx-openapi-archetype \
                        -DarchetypeVersion=1.0-SNAPSHOT \
                        -Dpackage=com.redhat.runtimes \
                        -DgroupId=com.redhat.runtimes.vertx \
                        -DartifactId=vertx-cms \
                        -Dversion=0.0.1-SNAPSHOT \
-                       -Dopenapi_app_useHibernateReactive=true \
-                       -Dopenapi_app_useJavaObjectOrientedQuery=false \
+                       -Dopenapi_app_database_library=jooq \
+                       -Dopenapi_app_async_library=rxjava2 \
                        -Dopenapi_app_contract_uri=https://studio-ws.apicur.io/sharing/fb9d632f-6777-44c6-a22e-0a33d88a1d52?content=true \
                        -Dinteractive=false
 ```
@@ -29,11 +29,11 @@ mvn archetype:generate -DarchetypeGroupId=com.zanclus.openapi.vertx \
 - Generates JPA Entity classes from the OpenAPI contract
 - Generates jOOQ Query DSL classes from the Hibernate/JPA entities
 - Creates a *stub* Vert.x Main Verticle
+- Allow to choose between jOOQ and Hibernate Reactive
+- Allow to choose between basic Vert.x style callbacks, RxJava2, and Mutiny for async APIs
 
 ## Forthcoming Features
 
-- Allow to choose between jOOQ and Hibernate Reactive
-- Allow to choose between basic Vert.x style callbacks, RxJava2, and Mutiny for async APIs
 - Enable generating the Vert.x Web API Contract MainVerticle
 - Add your idea to the GitHub issues!!!
 
