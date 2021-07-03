@@ -3,9 +3,13 @@
     xmlns="https://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <requiredProperties>
-    <requiredProperty key="openapi_app_useHibernateReactive"></requiredProperty>
-    <requiredProperty key="openapi_app_useJavaObjectOrientedQuery"></requiredProperty>
-    <requiredProperty key="openapi_app_contract_uri" ></requiredProperty>
+    <requiredProperty key="openapi_app_database_library">
+      <validationRegex>(jooq|hibernate)</validationRegex>
+    </requiredProperty>
+    <requiredProperty key="openapi_app_async_library">
+      <validationRegex>(vertx|rxjava2|mutiny)</validationRegex>
+    </requiredProperty>
+    <requiredProperty key="openapi_app_contract_uri"></requiredProperty>
   </requiredProperties>
   
   <fileSets>
