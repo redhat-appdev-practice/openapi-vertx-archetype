@@ -14,11 +14,11 @@ mvn archetype:generate -DarchetypeGroupId=com.redhat.runtimes \
                        -DarchetypeVersion=1.0-SNAPSHOT \
                        -Dpackage=com.redhat.runtimes \
                        -DgroupId=com.redhat.runtimes.vertx \
-                       -DartifactId=vertx-cms \
+                       -DartifactId=vertx-petstore \
                        -Dversion=0.0.1-SNAPSHOT \
                        -Dopenapi_app_database_library=jooq \
                        -Dopenapi_app_async_library=rxjava2 \
-                       -Dopenapi_app_contract_uri=https://studio-ws.apicur.io/sharing/fb9d632f-6777-44c6-a22e-0a33d88a1d52?content=true \
+                       -Dopenapi_app_contract_uri=https://petstore.swagger.io/v2/swagger.yaml \
                        -Dinteractive=false
 ```
 
