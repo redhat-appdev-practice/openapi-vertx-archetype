@@ -1,6 +1,9 @@
 # OpenAPI And Vert.x Bootstrap Archetype (Work In Progress)
 
-Following a [Contract-First API Development Approach](https://bit.ly/contract-first-api) can be daunting depending on the tools, languages, and frameworks you might like to use. This [Maven Archetype](https://maven.apache.org/guides/introduction/introduction-to-archetypes.html) is a quick-start for building a new OpenAPI driven application in [Eclipse Vert.x](https://vertx.io/).
+Following a [Contract-First API Development Approach](https://bit.ly/contract-first-api)
+can be daunting depending on the tools, languages, and frameworks you might like to use.
+This [Maven Archetype](https://maven.apache.org/guides/introduction/introduction-to-archetypes.html)
+is a quick-start for building a new OpenAPI driven application in [Eclipse Vert.x](https://vertx.io/).
 
 ## Using This Archetype
 
