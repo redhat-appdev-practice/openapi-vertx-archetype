@@ -2,12 +2,24 @@
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
+import java.nio.file.attribute.PosixFilePermissions
 
 Path projectPath = Paths.get(request.outputDirectory, request.artifactId)
 
 Properties properties = request.properties
 
 String dbLibrary = properties.getOrDefault("openapi_app_database_library", "jooq")
+
+
+String operatingSystem = System.getProperty("os.name").toLowerCase(Locale.ENGLISH)
+
+if (!operatingSystem.contains("windows")) {
+
+  Path mvnWrapper = Paths.get(projectPath.toString(), "mvnw")
+
+  Files.setPosixFilePermissions(mvnWrapper, PosixFilePermissions.fromString("rwxrwxrwx"))
+
+}
 
 if (dbLibrary.contentEquals("hibernate")) {
   Path dataAccess = Paths.get(projectPath.toAbsolutePath().toString(), "modules", "data-access")

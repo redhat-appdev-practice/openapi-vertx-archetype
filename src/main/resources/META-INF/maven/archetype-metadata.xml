@@ -16,6 +16,8 @@
     <fileSet encoding="UTF-8">
       <directory></directory>
       <includes>
+        <include>**/mvnw</include>
+        <include>**/*.cmd</include>
         <include>.gitignore</include>
         <include>README.md</include>
       </includes>
