@@ -61,9 +61,13 @@ mvn archetype:generate -DarchetypeGroupId=com.redhat.runtimes \
 - Allows you to choose between jOOQ and Hibernate Reactive
 - Allows you to choose between basic Vert.x style callbacks, RxJava2, and Mutiny for async APIs
 
-## Forthcoming Features
+## Future Feature Ideas
 
 - Enable generating the Vert.x Web API Contract MainVerticle
+- Generate Auth code for OpenAPI/OpenID/WebAuthn/FIDO2/Auth0
+- Allow adding Tracing with OpenTracing
+- Allow choosing logging framework
+- Allow choosing metrics (Prometheus/Micrometer/etc...)
 - Add your idea to the GitHub issues!!!
 
 ## FAQ
