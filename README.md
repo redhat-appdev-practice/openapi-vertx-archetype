@@ -37,7 +37,7 @@ The Archetype will create a maven multimodule project with a structure like this
   +- api (The Vert.x API stub where the business logic will be created)
 ```
 
-### Models Module
+### `models` Module: JPA Entities From OpenAPI Schemas
 
 The models generated are from the **schemas** section of the OpenAPI Spec. The templates
 used allow you to include annotations which will work with JPA. For example:
@@ -145,7 +145,7 @@ The templates provide the following extension attributes:
 * `x-java-getter-annotations`
   * These need to be added inside of the individual fields of the schema and will be added to the getter methods
 
-### jOOQ Query DSL From Hibernate Models
+### `data-access` Module: jOOQ Query DSL From JPA Entities
 
 [jOOQ](https://www.jooq.org/) allows you to write queries for relation databases in a generated Java query DSL. In order
 to create that DSL, it generally would analyze an existing database to formulate the DSL. That would require a DB-first
@@ -171,7 +171,7 @@ Future<List<Todo>> updatedCustom = queryExecutor.execute(dslContext ->
                     .into(Todo.class);
 ```
 
-### The API module
+### `api` Module: Vert.x Code Leveraging Hibernate Reactive or jOOQ
 
 This is a work in progress and right now creates just a blank `MainVerticle` class
 
