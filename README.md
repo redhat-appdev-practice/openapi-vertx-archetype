@@ -25,6 +25,156 @@ mvn archetype:generate -DarchetypeGroupId=com.redhat.runtimes \
                        -Dinteractive=false
 ```
 
+The Archetype will create a maven multimodule project with a structure like this:
+
+```
+- Parent
+  |
+  +- models (POJOs for Hibernate/jOOQ ORMs)
+  |
+  +- data-access (optional jOOQ query DSL)
+  |
+  +- api (The Vert.x API stub where the business logic will be created)
+```
+
+### Models Module
+
+The models generated are from the **schemas** section of the OpenAPI Spec. The templates
+used allow you to include annotations which will work with JPA. For example:
+
+This OpenAPI Schema . . . 
+```yaml
+components:
+  schemas:
+    title: Todo
+    description: 'A Todo list item'
+    type: object
+    x-java-class-annotations:
+      - '@javax.persistence.Entity'                 ## JPA Annotations
+      - '@javax.persistence.Table(name = "todos")'  ## JPA Annotations
+    properties:
+      title:
+        type: string
+      description:
+        type: string
+        x-java-field-annotations:
+          - '@javax.persistence.Column(columnDefinition = "TEXT")'
+      id:
+        type: string
+        format: uuid
+        x-java-field-annotations:
+          - '@javax.persistence.Id'
+          - '@javax.persistence.Column(name = "id", updatable = false, nullable = false)'
+          - '@javax.persistence.GeneratedValue(generator = "UUID")'
+          - '@org.hibernate.annotations.GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")'
+          - '@javax.persistence.Column(name = "id", updatable = false, nullable = false)'
+      created:
+        type: string
+        format: datetime
+        x-java-field-annotations:
+          - '@javax.persistence.Column(name = "created", updatable = false, nullable = false)'
+          - '@org.hibernate.annotations.CreationTimestamp'
+      dueDate:
+        type: string
+        format: date
+    example:
+      title: My new todo
+      description: This is a really cool todo item
+      id: 81a9d97a-d42d-11eb-9edd-2bc577670ad3
+```
+
+Would be turned into this POJO:
+```java
+/**
+ * A Todo list item
+ */
+@ApiModel(description = "A Todo list item")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-08-03T08:22:24.280350-04:00[America/New_York]")
+
+@javax.persistence.Entity
+@javax.persistence.Table(name = "todos")
+public class Todo  implements Serializable {
+  private static final long serialVersionUID = 1L;
+
+  @JsonProperty("id")
+  @javax.persistence.Id
+  @javax.persistence.GeneratedValue(generator = "UUID")
+  @org.hibernate.annotations.GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+  @javax.persistence.Column(name = "id", updatable = false, nullable = false)
+  private UUID id;
+
+  @JsonProperty("title")
+  private String title;
+
+  @JsonProperty("description")
+  @javax.persistence.Column(columnDefinition = "TEXT")
+  private String description;
+
+  @JsonProperty("created")
+  @org.hibernate.annotations.CreationTimestamp
+  @javax.persistence.Column(name = "created", updatable = false, nullable = false)
+  private OffsetDateTime created;
+
+  @JsonProperty("dueDate")
+  private OffsetDateTime dueDate;
+
+  @JsonProperty("complete")
+  private Boolean complete;
+
+  @JsonProperty("author")
+  private String author;
+
+  public Todo id(UUID id) {
+    this.id = id;
+    return this;
+  }
+
+  // getters/setters/equals/hashcode methods 
+
+}
+```
+
+These are provided for using custom [Hibernate OpenAPI Generator Templates](https://github.com/redhat-appdev-practice/hibernate-openapi-templates)
+
+The templates provide the following extension attributes:
+
+* `x-java-class-annotations`
+  * These need to be at the same level as the `title` for a schema object and are added above the class definition
+* `x-java-field-annotations`
+  * These need to be added inside of the individual fields of the schema and will be added to the private field definition
+* `x-java-getter-annotations`
+  * These need to be added inside of the individual fields of the schema and will be added to the getter methods
+
+### jOOQ Query DSL From Hibernate Models
+
+[jOOQ](https://www.jooq.org/) allows you to write queries for relation databases in a generated Java query DSL. In order
+to create that DSL, it generally would analyze an existing database to formulate the DSL. That would require a DB-first
+approach and we are trying to create a contract-first approach. To support this, we instead generate the Hibernate
+models (Entities/POJOs) and use those models to generate a *fake* in-memory database and then jOOQ generates the DSL
+from there. The documentation for this process is [HERE](https://www.jooq.org/doc/latest/manual/code-generation/codegen-jpa/).
+Since this is complicated to set up, this Archetype does that setup for you using the POJOs generated from the `models`
+module. You, as a developer using this archetype, just need to ensure that your `schemas` objects in the OpenAPI
+specification have the `x-java-class-annotations` and `x-java-field-annotations` added to create proper JPA entities and
+relationships.
+
+With the jOOQ query DSL created, you can use it in Vert.x via [Jans Klingsporn](https://github.com/jklingsporn) 's
+wonderful [implementation](https://github.com/jklingsporn/vertx-jooq) for Vert.x. See an example query below:
+
+```java
+ClassicQueryExecutor queryExecutor = new JDBCClassicGenericQueryExecutor(configuration,vertx);
+Future<List<Todo>> updatedCustom = queryExecutor.execute(dslContext ->
+                dslContext
+                    .select()
+                    .from(Tables.TODO)
+                    .where(TODO.DUE_DATE.le(Date.now)))
+                    .fetch()
+                    .into(Todo.class);
+```
+
+### The API module
+
+This is a work in progress and right now creates just a blank `MainVerticle` class
+
 ## Options
 
 * `package`
