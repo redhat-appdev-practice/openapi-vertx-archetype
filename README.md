@@ -213,6 +213,7 @@ This is a work in progress and right now creates just a blank `MainVerticle` cla
 
 ## Future Feature Ideas
 
+- Add JKube Maven Plugin as an option to simplify K8s/OpenShift deployment
 - Enable generating the Vert.x Web API Contract MainVerticle
 - Generate Auth code for OpenAPI/OpenID/WebAuthn/FIDO2/Auth0
 - Allow adding Tracing with OpenTracing
