@@ -4,23 +4,30 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.attribute.PosixFilePermissions
 
-Path projectPath = Paths.get(request.outputDirectory, request.artifactId)
-
 Properties properties = request.properties
 
-String dbLibrary = properties.getOrDefault("openapi_app_database_library", "jooq")
+Path projectPath = Paths.get(request.outputDirectory, request.artifactId)
 
-
+// On UNIX-like systems, make the Maven wrapper script executable
 String operatingSystem = System.getProperty("os.name").toLowerCase(Locale.ENGLISH)
-
 if (!operatingSystem.contains("windows")) {
-
   Path mvnWrapper = Paths.get(projectPath.toString(), "mvnw")
-
   Files.setPosixFilePermissions(mvnWrapper, PosixFilePermissions.fromString("rwxrwxrwx"))
-
 }
 
+// Download/Copy OpenAPI file into project
+Path openApiPath = Paths.get(request.outputDirectory, request.artifactId, "src", "main", "resources")
+Path openApiFile = Paths.get(request.outputDirectory, request.artifactId, "src", "main", "resources", "openapi.yml")
+openApiPath.toFile().mkdirs()
+URL openApiSource = new URL(properties.getProperty('openapi_app_contract_uri'))
+openApiPath.toFile() << openApiSource.openStream()
+
+
+// Enable/Disable jOOQ DSL module
+String dbLibrary = properties.getProperty("openapi_app_database_library", "jooq")
+
+// If dbLibrary == 'hibernate', delete the jOOQ module dir and remove references from
+// the parent pom
 if (dbLibrary.contentEquals("hibernate")) {
   Path dataAccess = Paths.get(projectPath.toAbsolutePath().toString(), "modules", "data-access")
   dataAccess.toFile().deleteDir()

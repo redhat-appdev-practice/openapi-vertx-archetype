@@ -33,16 +33,30 @@
   <modules>
     <module id="${rootArtifactId}-models" dir="modules/models" name="${rootArtifactId}-models">
       <fileSets>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory></directory>
+          <includes>
+            <include>pom.xml</include>
+          </includes>
+        </fileSet>
         <fileSet encoding="UTF-8">
           <directory></directory>
           <includes>
             <include>README.md</include>
+            <include>.openapi-generator-ignore</include>
           </includes>
         </fileSet>
       </fileSets>
     </module>
     <module id="${rootArtifactId}-data-access" dir="modules/data-access" name="${rootArtifactId}-data-access">
       <fileSets>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory></directory>
+          <includes>
+            <include>pom.xml</include>
+          </includes>
+        </fileSet>
       </fileSets>
     </module>
     <module id="${rootArtifactId}-api" dir="modules/api" name="${rootArtifactId}-api">
@@ -51,6 +65,19 @@
           <directory>src/main/java</directory>
           <includes>
             <include>**/*.java</include>
+          </includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory></directory>
+          <includes>
+            <include>pom.xml</include>
+          </includes>
+        </fileSet>
+        <fileSet encoding="UTF-8">
+          <directory></directory>
+          <includes>
+            <include>README.md</include>
+            <include>.openapi-generator-ignore</include>
           </includes>
         </fileSet>
       </fileSets>
