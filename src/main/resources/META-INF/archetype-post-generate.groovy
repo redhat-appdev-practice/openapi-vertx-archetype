@@ -15,12 +15,20 @@ if (!operatingSystem.contains("windows")) {
   Files.setPosixFilePermissions(mvnWrapper, PosixFilePermissions.fromString("rwxrwxrwx"))
 }
 
+// Create Maven project folder structure for all modules
+Path apiPath = Paths.get(request.outputDirectory, request.artifactId, "modules", "api", "src", "main", "resources")
+apiPath.toFile().mkdirs()
+Path dataPath = Paths.get(request.outputDirectory, request.artifactId, "modules", "data-access", "src", "main", "resources")
+dataPath.toFile().mkdirs()
+Path modelsPath = Paths.get(request.outputDirectory, request.artifactId, "modules", "models", "src", "main", "resources")
+modelsPath.toFile().mkdirs()
+
 // Download/Copy OpenAPI file into project
 Path openApiPath = Paths.get(request.outputDirectory, request.artifactId, "src", "main", "resources")
-Path openApiFile = Paths.get(request.outputDirectory, request.artifactId, "src", "main", "resources", "openapi.yml")
 openApiPath.toFile().mkdirs()
+Path openApiFile = Paths.get(request.outputDirectory, request.artifactId, "src", "main", "resources", "openapi.yml")
 URL openApiSource = new URL(properties.getProperty('openapi_app_contract_uri'))
-openApiPath.toFile() << openApiSource.openStream()
+openApiFile.toFile() << openApiSource.openStream()
 
 
 // Enable/Disable jOOQ DSL module
@@ -62,3 +70,13 @@ if (dbLibrary.contentEquals("hibernate")) {
   writer.write(sb.toString())
   writer.close()
 }
+
+// Run `mvn clean verify` in the newly created project
+def process = new ProcessBuilder(["mvn", "clean", "verify", "-B"])
+                    .directory(projectPath.toFile())
+                    .redirectErrorStream(true)
+                    .start()
+process.outputStream.close()
+process.inputStream.eachLine { line -> System.err.println line }
+process.waitFor()
+return process.exitValue()

@@ -7,8 +7,8 @@
     <version>${version}</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
-  <groupId>${groupId}.api</groupId>
-  <artifactId>${artifactId}-api</artifactId>
+  <groupId>${groupId}</groupId>
+  <artifactId>${artifactId}</artifactId>
   <version>${version}</version>
   <name>${artifactId}</name>
   <properties>
@@ -31,15 +31,15 @@
   </dependencyManagement>
   <dependencies>
     <dependency>
-      <groupId>${groupId}.models</groupId>
-      <artifactId>${rootArtifactId}-models</artifactId>
-      <version>${version}</version>
+      <groupId>${parent.groupId}</groupId>
+      <artifactId>${parent.artifactId}-models</artifactId>
+      <version>${parent.version}</version>
     </dependency>
 #if($openapi_app_database_library == "jooq")
     <dependency>
-      <groupId>${groupId}.data</groupId>
-      <artifactId>${rootArtifactId}-data-access</artifactId>
-      <version>${version}</version>
+      <groupId>${parent.groupId}</groupId>
+      <artifactId>${parent.artifactId}-data-access</artifactId>
+      <version>${parent.version}</version>
     </dependency>
 #end
     <dependency>
@@ -48,12 +48,30 @@
     </dependency>
     <dependency>
       <groupId>io.vertx</groupId>
-      <artifactId>vertx-web-openapi</artifactId>
+      <artifactId>vertx-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-web-api-contract</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-codegen</artifactId>
+      <classifier>processor</classifier>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-web-validation</artifactId>
     </dependency>
     <dependency>
       <groupId>io.reactiverse</groupId>
       <artifactId>reactive-pg-client</artifactId>
       <version>0.11.4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.31</version>
     </dependency>
 #if($openapi_app_async_library == "rxjava2")
     <dependency>
@@ -123,6 +141,44 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>src/gen/java</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-scm-plugin</artifactId>
+        <version>1.11.2</version>
+        <executions>
+          <execution>
+            <phase>initialize</phase>
+            <goals>
+              <goal>checkout</goal>
+            </goals>
+            <configuration>
+              <connectionUrl>scm:git:https://github.com/redhat-appdev-practice/vertx-openapi-templates.git</connectionUrl>
+              <checkoutDirectory>templates</checkoutDirectory>
+              <connectionType>connection</connectionType>
+              <scmVersion>trunk</scmVersion>
+              <scmVersionType>branch</scmVersionType>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <artifactId>openapi-generator-maven-plugin</artifactId>
         <groupId>org.openapitools</groupId>
         <version>5.1.1</version>
@@ -140,13 +196,15 @@
               <output>./</output>
               <skipOverwrite>false</skipOverwrite>
               <generateModels>false</generateModels>
-              <generateSupportingFiles>false</generateSupportingFiles>
+              <generateSupportingFiles>true</generateSupportingFiles>
               <generateModelTests>false</generateModelTests>
               <inputSpec>${project.basedir}/../../src/main/resources/openapi.yml</inputSpec>
+              <templateDirectory>${project.basedir}/templates</templateDirectory>
               <configOptions>
                 <dateLibrary>java8-localdatetime</dateLibrary>
                 <invokerPackage>${package}</invokerPackage>
                 <apiPackage>${package}.api</apiPackage>
+                <modelPackage>${package}.models</modelPackage>
                 <serializableModel>true</serializableModel>
                 <sortModelPropertiesByRequiredFlag>true</sortModelPropertiesByRequiredFlag>
                 <useTags>true</useTags>
