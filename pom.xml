@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <groupId>com.redhat.runtimes</groupId>
+  
+  <groupId>com.redhat.consulting</groupId>
   <artifactId>openapi-vertx-archetype</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>maven-archetype</packaging>
-
+  
   <name>vertx-openapi-archetype</name>
-
+  
+  <!-- License must be present-->
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+      <comments>At least one license must be present. Here is an example of ASL v. 2.0</comments>
+    </license>
+  </licenses>
+  
+  
+  <!-- Source code management information is mandatory as well.-->
+  <scm>
+    <connection>scm:git:git@github.com:redhat-appdev-practice/vertx-openapi-archetype.git</connection>
+    <url>scm:git:git@github.com:redhat-appdev-practice/vertx-openapi-archetype.git</url>
+    <developerConnection>scm:git:git@github.com:redhat-appdev-practice/vertx-openapi-archetype.git</developerConnection>
+  </scm>
+  
+  
+  <!-- At least one developer should be mentioned -->
+  <developers>
+    <developer>
+      <id>josphill</id>
+      <name>Deven Phillips</name>
+      <organization>Red Hat</organization>
+    </developer>
+  </developers>
+  
   <build>
     <extensions>
       <extension>
@@ -17,7 +45,7 @@
         <version>3.2.0</version>
       </extension>
     </extensions>
-
+    
     <pluginManagement>
       <plugins>
         <plugin>
@@ -26,5 +54,17 @@
         </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.6</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>jboss-staging</serverId>
+          <nexusUrl>https://repository.jboss.org/nexus/</nexusUrl>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>
