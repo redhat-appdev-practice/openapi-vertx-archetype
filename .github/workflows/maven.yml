@@ -16,14 +16,18 @@ jobs:
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
       - name: Set release version
-        run: mvn versions:use-next-releases versions:commit
+        run: mvn -B versions:use-next-releases versions:commit
       - name: Publish package
-        run: mvn --batch-mode clean verify deploy
+        run: mvn -B clean verify deploy
         env:
           MAVEN_USERNAME: ${{ secrets.NEXUS_USER }}
           MAVEN_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
       - name: Set release version
-        run: mvn versions:use-next-snapshots versions:commit
+        run: mvn -B versions:use-next-snapshots versions:commit
+      - name: Set git username
+        run: git config --global user.name "GitHub Actions"
+      - name: Set git email
+        run: git config --global user.email "rhc-na-app-dev-practice@redhat.com"
       - name: Commit new snapshot version
         run: git commit pom.xml -m 'Update snapshot version after release'
       - name: Push new snapshot version
