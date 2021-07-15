@@ -4,8 +4,11 @@
   
   <groupId>com.redhat.consulting</groupId>
   <artifactId>openapi-vertx-archetype</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <packaging>maven-archetype</packaging>
+  
+  <description>OpenAPI And Vert.x Bootstrap Archetype</description>
+  <url>https://github.com/redhat-appdev-practice/openapi-vertx-archetype</url>
   
   <name>vertx-openapi-archetype</name>
   
@@ -26,7 +29,6 @@
     <url>scm:git:git@github.com:redhat-appdev-practice/vertx-openapi-archetype.git</url>
     <developerConnection>scm:git:git@github.com:redhat-appdev-practice/vertx-openapi-archetype.git</developerConnection>
   </scm>
-  
   
   <!-- At least one developer should be mentioned -->
   <developers>
@@ -58,11 +60,12 @@
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.6.6</version>
+        <version>1.6.8</version>
         <extensions>true</extensions>
         <configuration>
           <serverId>jboss-staging</serverId>
           <nexusUrl>https://repository.jboss.org/nexus/</nexusUrl>
+          <stagingProfileId>10e6f732f9c922</stagingProfileId>
         </configuration>
       </plugin>
     </plugins>
