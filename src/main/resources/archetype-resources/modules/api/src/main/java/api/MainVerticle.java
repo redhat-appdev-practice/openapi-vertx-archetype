@@ -12,7 +12,7 @@ import io.vertx.reactivex.core.AbstractVerticle;
 import io.vertx.core.Promise;
 #end
 #if($openapi_app_async_library == "vertx")
-import io.vertx.reactivex.core.AbstractVerticle;
+import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 #end
 
@@ -23,10 +23,11 @@ public class MainVerticle extends AbstractVerticle {
 
 	@Override
 #if($openapi_app_async_library == "mutiny")
-	public Uni<Void> asyncStart() throws Exception {
+	public Uni<Void> asyncStart() {
+		return Uni.createFrom().nullItem();
 #else
 	public void start(Promise<Void> startPromise) throws Exception {
-#end
 		startPromise.complete();
+#end
 	}
 }

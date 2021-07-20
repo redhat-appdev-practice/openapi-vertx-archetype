@@ -15,6 +15,8 @@ jobs:
           server-id: jboss-staging
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
+      - name: Check out default branch
+        run: git checkout trunk
       - name: Set release version
         run: mvn -B versions:use-next-releases versions:commit
       - name: Publish package
