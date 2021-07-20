@@ -4,13 +4,17 @@
   
   <groupId>com.redhat.consulting</groupId>
   <artifactId>openapi-vertx-archetype</artifactId>
+<<<<<<< HEAD
   <version>1.0.5-SNAPSHOT</version>
+=======
+  <version>1.0.43-SNAPSHOT</version>
+>>>>>>> origin/trunk
   <packaging>maven-archetype</packaging>
   
   <description>OpenAPI And Vert.x Bootstrap Archetype</description>
   <url>https://github.com/redhat-appdev-practice/openapi-vertx-archetype</url>
   
-  <name>vertx-openapi-archetype</name>
+  <name>openapi-vertx-archetype</name>
   
   <!-- License must be present-->
   <licenses>
