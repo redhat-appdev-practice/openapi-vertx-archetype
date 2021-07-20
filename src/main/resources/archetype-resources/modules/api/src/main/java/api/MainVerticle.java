@@ -24,9 +24,10 @@ public class MainVerticle extends AbstractVerticle {
 	@Override
 #if($openapi_app_async_library == "mutiny")
 	public Uni<Void> asyncStart() {
+		return Uni.createFrom().nullItem();
 #else
 	public void start(Promise<Void> startPromise) throws Exception {
-#end
 		startPromise.complete();
+#end
 	}
 }
