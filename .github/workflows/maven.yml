@@ -32,4 +32,4 @@ jobs:
           git config --global user.name "GitHub Actions"
       - name: Maven Release
         run: |
-            mvn -B release:prepare release:perform -DtagNameFormat="r@{project.version} -X -e"
+            mvn -B -X -e release:prepare release:perform -DtagNameFormat="r@{project.version}"
