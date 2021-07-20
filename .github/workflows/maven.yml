@@ -28,4 +28,4 @@ jobs:
           MAVEN_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
       - name: Maven Release
         run: |
-            mvn -B release:prepare release:perform"
+            mvn -B release:prepare release:perform -DtagNameFormat="r@{project.version}"
