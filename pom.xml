@@ -4,13 +4,13 @@
   
   <groupId>com.redhat.consulting</groupId>
   <artifactId>openapi-vertx-archetype</artifactId>
-  <version>1.0.5</version>
+  <version>1.0.5-SNAPSHOT</version>
   <packaging>maven-archetype</packaging>
   
   <description>OpenAPI And Vert.x Bootstrap Archetype</description>
   <url>https://github.com/redhat-appdev-practice/openapi-vertx-archetype</url>
   
-  <name>vertx-openapi-archetype</name>
+  <name>openapi-vertx-archetype</name>
   
   <!-- License must be present-->
   <licenses>
@@ -25,9 +25,10 @@
   
   <!-- Source code management information is mandatory as well.-->
   <scm>
-    <connection>scm:git:git@github.com:redhat-appdev-practice/vertx-openapi-archetype.git</connection>
-    <url>scm:git:git@github.com:redhat-appdev-practice/vertx-openapi-archetype.git</url>
-    <developerConnection>scm:git:git@github.com:redhat-appdev-practice/vertx-openapi-archetype.git</developerConnection>
+    <connection>scm:git:git@github.com:redhat-appdev-practice/openapi-vertx-archetype.git</connection>
+    <url>scm:git:git@github.com:redhat-appdev-practice/openapi-vertx-archetype.git</url>
+    <developerConnection>scm:git:git@github.com:redhat-appdev-practice/openapi-vertx-archetype.git</developerConnection>
+    <tag>openapi-vertx-archetype-1.0.5</tag>
   </scm>
   
   <!-- At least one developer should be mentioned -->
