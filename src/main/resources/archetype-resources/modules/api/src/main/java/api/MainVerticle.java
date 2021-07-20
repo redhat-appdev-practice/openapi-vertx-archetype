@@ -12,7 +12,7 @@ import io.vertx.reactivex.core.AbstractVerticle;
 import io.vertx.core.Promise;
 #end
 #if($openapi_app_async_library == "vertx")
-import io.vertx.reactivex.core.AbstractVerticle;
+import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 #end
 
