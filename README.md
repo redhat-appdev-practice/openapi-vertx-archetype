@@ -225,3 +225,10 @@ This is a work in progress and right now creates just a blank `MainVerticle` cla
 
 - Why does it generate a Multi-module Maven project instead of a simple single Maven project?
   - This is a limitation of the jOOQ JPA generator and I found that I liked it this way anyhow.
+
+## Publishing To Maven Central
+
+The build, testing, and publishing of this archetype is automated via GitHub
+Actions using the Secrets defined on this repository. The user account is tied
+to [Deven Phillips](https://github.com/infosec812/)' and used to publish via
+the [JBoss Nexus Staging Repository](https://developer.jboss.org/docs/DOC-52892).
