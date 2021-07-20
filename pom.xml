@@ -4,7 +4,6 @@
   
   <groupId>com.redhat.consulting</groupId>
   <artifactId>openapi-vertx-archetype</artifactId>
-<<<<<<< HEAD
   <version>1.0.5-SNAPSHOT</version>
   <packaging>maven-archetype</packaging>
   
