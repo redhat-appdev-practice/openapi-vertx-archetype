@@ -28,6 +28,7 @@
     <connection>scm:git:git@github.com:redhat-appdev-practice/vertx-openapi-archetype.git</connection>
     <url>scm:git:git@github.com:redhat-appdev-practice/vertx-openapi-archetype.git</url>
     <developerConnection>scm:git:git@github.com:redhat-appdev-practice/vertx-openapi-archetype.git</developerConnection>
+    <tag>openapi-vertx-archetype-1.0.5</tag>
   </scm>
   
   <!-- At least one developer should be mentioned -->
