@@ -4,7 +4,7 @@
   
   <groupId>com.redhat.consulting</groupId>
   <artifactId>openapi-vertx-archetype</artifactId>
-  <version>1.0.5</version>
+  <version>1.0.5-SNAPSHOT</version>
   <packaging>maven-archetype</packaging>
   
   <description>OpenAPI And Vert.x Bootstrap Archetype</description>
@@ -27,7 +27,7 @@
   <scm>
     <connection>scm:git:git@github.com:redhat-appdev-practice/vertx-openapi-archetype.git</connection>
     <url>scm:git:git@github.com:redhat-appdev-practice/vertx-openapi-archetype.git</url>
-    <developerConnection>scm:git:git@github.com:redhat-appdev-practice/vertx-openapi-archetype.git</developerConnection>
+    <developerConnection>scm:git:https://github.com/redhat-appdev-practice/vertx-openapi-archetype.git</developerConnection>
     <tag>openapi-vertx-archetype-1.0.5</tag>
   </scm>
   
