@@ -22,7 +22,6 @@
     </license>
   </licenses>
   
-  
   <!-- Source code management information is mandatory as well.-->
   <scm>
     <connection>scm:git:git@github.com:redhat-appdev-practice/openapi-vertx-archetype.git</connection>
@@ -67,6 +66,7 @@
           <serverId>jboss-staging</serverId>
           <nexusUrl>https://repository.jboss.org/nexus/</nexusUrl>
           <stagingProfileId>2161b7b8da0080</stagingProfileId>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
         </configuration>
       </plugin>
     </plugins>
