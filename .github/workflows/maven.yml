@@ -26,6 +26,10 @@ jobs:
         env:
           MAVEN_USERNAME: ${{ secrets.NEXUS_USER }}
           MAVEN_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+      - name: Set Git User Info
+        run: |
+          git config --global user.email 'rhc-na-app-dev-practice@redhat.com'
+          git config --global user.name "GitHub Actions"
       - name: Maven Release
         run: |
             mvn -B release:prepare release:perform -DtagNameFormat="r@{project.version}"
