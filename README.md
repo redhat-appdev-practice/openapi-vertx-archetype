@@ -8,13 +8,9 @@ is a quick-start for building a new OpenAPI driven application in [Eclipse Vert.
 ## Using This Archetype
 
 ```bash
-git clone https://github.com/redhat-appdev-practice/openapi-vertx-archetype.git
-cd openapi-vertx-archetype
-mvn install
-cd <workspace>
-mvn archetype:generate -DarchetypeGroupId=com.redhat.runtimes \
+mvn archetype:generate -DarchetypeGroupId=com.redhat.consulting \
                        -DarchetypeArtifactId=openapi-vertx-archetype \
-                       -DarchetypeVersion=1.0-SNAPSHOT \
+                       -DarchetypeVersion=1.0.8 \
                        -Dpackage=com.redhat.runtimes \
                        -DgroupId=com.redhat.runtimes.vertx \
                        -DartifactId=vertx-petstore \
