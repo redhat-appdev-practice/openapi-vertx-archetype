@@ -10,7 +10,6 @@ Properties properties = request.properties
 
 String dbLibrary = properties.getOrDefault("openapi_app_database_library", "jooq")
 
-
 String operatingSystem = System.getProperty("os.name").toLowerCase(Locale.ENGLISH)
 
 if (!operatingSystem.contains("windows")) {
@@ -20,6 +19,13 @@ if (!operatingSystem.contains("windows")) {
   Files.setPosixFilePermissions(mvnWrapper, PosixFilePermissions.fromString("rwxrwxrwx"))
 
 }
+
+// Download/Copy OpenAPI file into project
+Path openApiPath = Paths.get(request.outputDirectory, request.artifactId, "modules", "api", "src", "main", "resources")
+openApiPath.toFile().mkdirs()
+Path openApiFile = Paths.get(openApiPath.toAbsolutePath().toString(), "openapi.yml")
+URL openApiSource = new URL(properties.getProperty('openapi_app_contract_uri'))
+openApiFile.toFile() << openApiSource.openStream()
 
 if (dbLibrary.contentEquals("hibernate")) {
   Path dataAccess = Paths.get(projectPath.toAbsolutePath().toString(), "modules", "data-access")
