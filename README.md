@@ -203,7 +203,7 @@ This is a work in progress and right now creates just a blank `MainVerticle` cla
 - Integrates OpenAPI Generator via Maven Plugin
 - Generates JPA Entity classes from the OpenAPI contract
 - Generates jOOQ Query DSL classes from the Hibernate/JPA entities
-- Creates a *stub* Vert.x Main Verticle
+- Creates a **stub** Vert.x Main Verticle
 - Allows you to choose between jOOQ and Hibernate Reactive
 - Allows you to choose between basic Vert.x style callbacks, RxJava2, and Mutiny for async APIs
 

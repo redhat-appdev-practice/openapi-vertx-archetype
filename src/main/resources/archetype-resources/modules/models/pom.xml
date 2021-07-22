@@ -131,7 +131,7 @@
                             <generateSupportingFiles>false</generateSupportingFiles>
                             <output>./</output>
                             <skipOverwrite>false</skipOverwrite>
-                            <inputSpec>${openapi_app_contract_uri}</inputSpec>
+                            <inputSpec>${project.basedir}/../api/src/main/resources/openapi.yml</inputSpec>
                             <configOptions>
                                 <dateLibrary>java8-localdatetime</dateLibrary>
                                 <modelPackage>${package}.models</modelPackage>
