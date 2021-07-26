@@ -10,7 +10,7 @@ is a quick-start for building a new OpenAPI driven application in [Eclipse Vert.
 ```bash
 mvn archetype:generate -DarchetypeGroupId=com.redhat.consulting \
                        -DarchetypeArtifactId=openapi-vertx-archetype \
-                       -DarchetypeVersion=1.0.8 \
+                       -DarchetypeVersion=1.0.9 \
                        -Dpackage=com.redhat.runtimes \
                        -DgroupId=com.redhat.runtimes.vertx \
                        -DartifactId=vertx-petstore \
