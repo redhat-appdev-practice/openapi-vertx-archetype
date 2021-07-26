@@ -17,7 +17,7 @@ mvn archetype:generate -DarchetypeGroupId=com.redhat.consulting \
                        -Dversion=0.0.1-SNAPSHOT \
                        -Dopenapi_app_database_library=jooq \
                        -Dopenapi_app_async_library=rxjava2 \
-                       -Dopenapi_app_contract_uri=https://petstore.swagger.io/v2/swagger.yaml \
+                       -Dopenapi_app_contract_uri=https://petstore3.swagger.io/api/v3/openapi.yaml \
                        -Dinteractive=false
 ```
 
