@@ -23,13 +23,68 @@ if (!operatingSystem.contains("windows")) {
 // Download/Copy OpenAPI file into project
 Path openApiPath = Paths.get(request.outputDirectory, request.artifactId, "modules", "api", "src", "main", "resources")
 openApiPath.toFile().mkdirs()
-Path openApiFile = Paths.get(openApiPath.toAbsolutePath().toString(), "openapi.yml")
-URL openApiSource = new URL(properties.getProperty('openapi_app_contract_uri'))
+
+String contractUri = properties.getProperty('openapi_app_contract_uri')
+String apiFileName = 'openapi.yml'
+
+URL openApiSource
+if (contractUri.matches(/^[a-z]+:\/\/.*/)) {
+  openApiSource = new URL(properties.getProperty('openapi_app_contract_uri'))
+} else {
+  Path openApiSourcePath = Paths.get(contractUri).toAbsolutePath()
+  openApiSource = new URL("file://${openApiSourcePath.toString()}")
+}
+URLConnection conn = openApiSource.openConnection()
+
+def contentType = conn.contentType
+
+if (conn.contentType.contains('application/json') || contractUri.toLowerCase().endsWith('json')) {
+  apiFileName = 'openapi.json'
+}
+
+Path openApiFile = Paths.get(openApiPath.toAbsolutePath().toString(), apiFileName)
 openApiFile.toFile() << openApiSource.openStream()
+
+if (contractUri.toLowerCase().endsWith('json')) {
+  // Replace `openapi.yml` with `openapi.json` in models POM file
+
+  def modelsPom = Paths.get(projectPath.toAbsolutePath().toString(), "modules", "models", "pom.xml").toFile()
+  def sb = new StringBuilder();
+  Scanner sc
+  try {
+    sc = new Scanner(modelsPom)
+    String currentLine
+    while(sc.hasNext()){
+      currentLine = sc.nextLine()
+      if(currentLine.contains("openapi.yml")) {
+        def replacementLine = currentLine.replaceAll(/openapi\.yml/, 'openapi.json')
+        sb.append(replacementLine).append("\n")
+        continue
+      }
+      if (currentLine.trim().length()==0) {
+        continue
+      }
+      sb.append(currentLine).append("\n")
+    }
+  } finally {
+    sc.close()
+  }
+
+
+  // Empty the models pom file
+  PrintWriter pw = new PrintWriter(modelsPom)
+  pw.close()
+
+  // Write the modified models pom
+  BufferedWriter writer = new BufferedWriter(new FileWriter(modelsPom, true))
+  writer.write(sb.toString())
+  writer.close()
+}
 
 if (dbLibrary.contentEquals("hibernate")) {
   Path dataAccess = Paths.get(projectPath.toAbsolutePath().toString(), "modules", "data-access")
   dataAccess.toFile().deleteDir()
+
   def parentPom = Paths.get(projectPath.toAbsolutePath().toString(), "pom.xml").toFile()
   def sb = new StringBuilder();
 
