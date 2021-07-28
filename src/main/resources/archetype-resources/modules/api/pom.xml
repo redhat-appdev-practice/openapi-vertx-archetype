@@ -17,7 +17,7 @@
     <jkube.version>1.3.0</jkube.version>
     <jkube.enricher.jkube-service.type>NodePort</jkube.enricher.jkube-service.type>
 #if($openapi_app_async_library == "mutiny")
-    <mutiny.version>2.8.0</mutiny.version>
+    <mutiny.version>2.12.0</mutiny.version>
 #end
   </properties>
   <dependencyManagement>
