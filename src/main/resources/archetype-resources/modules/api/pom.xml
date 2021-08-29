@@ -102,7 +102,7 @@
     <dependency>
       <groupId>io.github.jklingsporn</groupId>
       <artifactId>vertx-jooq-classic-reactive</artifactId>
-      <version>${jooq_version}</version>
+      <version>${jooq_vertx_version}</version>
     </dependency>
 #else
     <dependency>
