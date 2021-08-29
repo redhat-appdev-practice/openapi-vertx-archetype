@@ -21,6 +21,9 @@ mvn archetype:generate -DarchetypeGroupId=com.redhat.consulting \
                        -Dinteractive=false
 ```
 
+**NOTE:**
+You can also override the default versions of many of the libraries using properties passed on the CLI. 
+
 The Archetype will create a maven multimodule project with a structure like this:
 
 ```
@@ -221,6 +224,16 @@ This is a work in progress and right now creates just a blank `MainVerticle` cla
 
 - Why does it generate a Multi-module Maven project instead of a simple single Maven project?
   - This is a limitation of the jOOQ JPA generator and I found that I liked it this way anyhow.
+- Can I update the version of **LIBRARY** without having to wait for a new version of this archetype?
+  - Yes, though you need to be careful doing so to ensure you don't put together incompatible versions. The following parameters are available as properties:
+    - `compiler_plugin_version`: Default value `3.8.1`
+    - `vertx_version`: Default value `4.1.2`
+    - `vertx_maven_plugin_version`: Default value `1.0.22`
+    - `mutiny_version`: Default value `2.12.0`
+    - `jkube_plugin_version`: Default value `1.3.0`
+    - `jooq_version`: Default value `3.15.2`
+    - `jooq_vertx_version`: Default value `6.3.0`
+    - `hibernate_reactive_version`: Default value `1.0.0.CR9`
 
 ## Publishing To Maven Central
 
