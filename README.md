@@ -13,11 +13,11 @@ mvn archetype:generate -DarchetypeGroupId=com.redhat.consulting \
                        -DarchetypeVersion=1.0.11 \
                        -Dpackage=com.redhat.runtimes \
                        -DgroupId=com.redhat.runtimes.vertx \
-                       -DartifactId=vertx-petstore \
+                       -DartifactId=openapi-vertx-todo \
                        -Dversion=0.0.1-SNAPSHOT \
                        -Dopenapi_app_database_library=jooq \
                        -Dopenapi_app_async_library=rxjava2 \
-                       -Dopenapi_app_contract_uri=https://petstore3.swagger.io/api/v3/openapi.yaml \
+                       -Dopenapi_app_contract_uri=https://gist.githubusercontent.com/InfoSec812/a8e5ca3920e940ffcedced9990738f65/raw/0443d76f360f9722cf25ccf285f5270831203148/openapi-vertx-jooq.yml \
                        -Dinteractive=false
 ```
 
