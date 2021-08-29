@@ -84,7 +84,7 @@
                 <pre-push>
                   PROJECT_VERSION=$(mvn -B --quiet help:evaluate -Dexpression=project.version -DforceStdout | sed 's@-SNAPSHOT@@g')
   
-                  grep "${PROJECT_VERSION}" README.md >> /dev/null
+                  grep "${PROJECT_VERSION}" README.md &gt;&gt; /dev/null
   
                   if [ $? -ne 0 ]; then
                   echo "Error: README examples show incorrect versions"
