@@ -81,16 +81,16 @@
             </goals>
             <configuration>
               <hooks>
-                <pre-push>
+                <pre-push><![CDATA[
                   PROJECT_VERSION=$(mvn -B --quiet help:evaluate -Dexpression=project.version -DforceStdout | sed 's@-SNAPSHOT@@g')
   
-                  grep "${PROJECT_VERSION}" README.md &gt;&gt; /dev/null
+                  grep "${PROJECT_VERSION}" README.md >> /dev/null
   
                   if [ $? -ne 0 ]; then
-                  echo "Error: README examples show incorrect versions"
-                  exit $?
+                      echo "Error: README examples show incorrect versions"
+                      exit $?
                   fi
-                </pre-push>
+                ]]></pre-push>
               </hooks>
             </configuration>
           </execution>

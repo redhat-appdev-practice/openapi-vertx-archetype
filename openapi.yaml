@@ -1,0 +1,281 @@
+openapi: 3.0.2
+info:
+    title: Todo
+    version: 1.0.0
+servers:
+    -
+        url: '{protocol}://{fqdn}:{port}/api/v1'
+        description: ''
+        variables:
+            protocol:
+                enum:
+                    - http
+                    - https
+                default: http
+            fqdn:
+                enum:
+                    - localhost
+                default: localhost
+            port:
+                enum:
+                    - '80'
+                    - '443'
+                    - '8080'
+                    - '9080'
+                default: '8080'
+tags:
+  - name: todos
+    description: CRUD operations for Todo items
+  - name: users
+    description: User profile information
+paths:
+    /todos:
+        summary: Path used to manage the list of todos.
+        description: >-
+            The REST endpoint/path used to list and create zero or more `Todo` entities.  This path contains a
+            `GET` and `POST` operation to perform the list and create tasks, respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Todo'
+                    description: Successful response - returns an array of `Todo` entities.
+            operationId: getTodos
+            summary: List All todos
+            tags:
+            - todos
+            description: Gets a list of all `Todo` entities.
+        post:
+            requestBody:
+                description: A new `Todo` to be created.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/NewTodo'
+                required: true
+            responses:
+                '201':
+                    description: Successful response.
+            operationId: createTodo
+            summary: Create a Todo
+            tags:
+            - todos
+            description: Creates a new instance of a `Todo`.
+    '/todos/{todoId}':
+        summary: Path used to manage a single Todo.
+        description: >-
+            The REST endpoint/path used to get, update, and delete single instances of an `Todo`.  This path
+            contains `GET`, `PUT`, and `DELETE` operations used to perform the get, update, and delete tasks,
+            respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Todo'
+                    description: Successful response - returns a single `Todo`.
+            operationId: getTodo
+            summary: Get a Todo
+            tags:
+            - todos
+            description: Gets the details of a single instance of a `Todo`.
+        put:
+            requestBody:
+                description: Updated `Todo` information.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Todo'
+                required: true
+            responses:
+                '202':
+                    description: Successful response.
+            operationId: updateTodo
+            summary: Update a Todo
+            tags:
+            - todos
+            description: Updates an existing `Todo`.
+        delete:
+            responses:
+                '204':
+                    description: Successful response.
+            operationId: deleteTodo
+            summary: Delete a Todo
+            tags:
+            - todos
+            description: Deletes an existing `Todo`.
+        parameters:
+            -
+                name: todoId
+                description: A unique identifier for a `Todo`.
+                schema:
+                    type: string
+                in: path
+                required: true
+    /users:
+        summary: Path used to manage the list of users.
+        description: >-
+            The REST endpoint/path used to list and create zero or more `User` entities.  This path contains a
+            `GET` and `POST` operation to perform the list and create tasks, respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/User'
+                    description: Successful response - returns an array of `User` entities.
+            operationId: getUsers
+            summary: List All users
+            tags:
+            - users
+            description: Gets a list of all `User` entities.
+        post:
+            requestBody:
+                description: A new `User` to be created.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/User'
+                required: true
+            responses:
+                '201':
+                    description: Successful response.
+            operationId: createUser
+            summary: Create a User
+            tags:
+            - users
+            description: Creates a new instance of a `User`.
+    '/users/{userId}':
+        summary: Path used to manage a single User.
+        description: >-
+            The REST endpoint/path used to get, update, and delete single instances of an `User`.  This path
+            contains `GET`, `PUT`, and `DELETE` operations used to perform the get, update, and delete tasks,
+            respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+                    description: Successful response - returns a single `User`.
+            operationId: getUser
+            summary: Get a User
+            tags:
+            - users
+            description: Gets the details of a single instance of a `User`.
+        put:
+            requestBody:
+                description: Updated `User` information.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/User'
+                required: true
+            responses:
+                '202':
+                    description: Successful response.
+            operationId: updateUser
+            summary: Update a User
+            tags:
+            - users
+            description: Updates an existing `User`.
+        delete:
+            responses:
+                '204':
+                    description: Successful response.
+            operationId: deleteUser
+            summary: Delete a User
+            tags:
+            - users
+            description: Deletes an existing `User`.
+        parameters:
+            -
+                name: userId
+                description: A unique identifier for a `User`.
+                schema:
+                    type: string
+                in: path
+                required: true
+components:
+    schemas:
+        Todo:
+            title: Todo
+            required:
+                - id
+                - title
+                - completed
+            type: object
+            allOf:
+                -
+                    $ref: '#/components/schemas/NewTodo'
+            example:
+                id: 06dd1d3c-185e-11eb-aa91-2f2172d321e0
+                title: My Todo Task
+                description: More details here
+                completed: false
+                dueDate: '2020-10-29'
+        User:
+            title: User
+            description: ''
+            type: object
+            properties:
+                username:
+                    type: string
+                    x-java-field-annotations:
+                        - '@javax.persistence.Id'
+                givenName:
+                    type: string
+                familyName:
+                    type: string
+                create:
+                    format: date-time
+                    type: string
+            example:
+                givenName: Deven
+                familyName: Phillips
+                create: '2020-11-13'
+            x-java-class-annotations:
+                - '@javax.persistence.Entity'
+                - '@javax.persistence.Table(name = "users")'
+        NewTodo:
+            title: NewTodo
+            description: ''
+            required:
+                - completed
+                - title
+            type: object
+            properties:
+                id:
+                    format: uuid
+                    type: string
+                    x-java-field-annotations:
+                        - '@javax.persistence.Id'
+                        - '@javax.persistence.GeneratedValue(generator = "UUID")'
+                        - '@javax.persistence.Column(name = "id", updatable = false, nullable = false)'
+                title:
+                    type: string
+                description:
+                    type: string
+                completed:
+                    default: false
+                    type: boolean
+                dueDate:
+                    format: date-time
+                    type: string
+            example:
+                title: My Todo Task
+                description: More details here
+                completed: false
+                dueDate: '2020-10-29'
+            x-java-class-annotations:
+                - '@javax.persistence.Entity'
+                - '@javax.persistence.Table(name = "todos")'
