@@ -12,6 +12,12 @@
         <relativePath>../../pom.xml</relativePath>
         <version>${version}</version>
     </parent>
+    
+    <properties>
+        <jooq.version>${jooq_version}</jooq.version>
+        <vertx.jooq.version>${jooq_vertx_version}</vertx.jooq.version>
+    </properties>
+    
     <dependencies>
         <dependency>
             <groupId>${groupId}.models</groupId>
@@ -19,17 +25,9 @@
             <version>${version}</version>
         </dependency>
         <dependency>
-            <!-- Use org.jooq            for the Open Source Edition
-                     org.jooq.pro        for commercial editions,
-                     org.jooq.pro-java-8 for commercial editions with Java 8 support,
-                     org.jooq.pro-java-6 for commercial editions with Java 6 support,
-                     org.jooq.trial      for the free trial edition
-
-                 Note: Only the Open Source Edition is hosted on Maven Central.
-                       Import the others manually from your distribution -->
-            <groupId>org.jooq</groupId>
-            <artifactId>jooq-meta-extensions-hibernate</artifactId>
-            <version>3.14.9</version>
+            <groupId>io.github.jklingsporn</groupId>
+            <artifactId>vertx-jooq-classic-reactive</artifactId>
+            <version>${vertx.jooq.version}</version>
         </dependency>
     </dependencies>
 
@@ -39,53 +37,79 @@
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
                 <version>${jooq_version}</version>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <generator>
-                                <database>
-                                    <name>org.jooq.meta.extensions.jpa.JPADatabase</name>
-                                    <properties>
+                <dependencies>
+                    <dependency>
+                        <!-- Use org.jooq            for the Open Source Edition
+                                 org.jooq.pro        for commercial editions,
+                                 org.jooq.pro-java-8 for commercial editions with Java 8 support,
+                                 org.jooq.pro-java-6 for commercial editions with Java 6 support,
+                                 org.jooq.trial      for the free trial edition
+            
+                             Note: Only the Open Source Edition is hosted on Maven Central.
+                                   Import the others manually from your distribution -->
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-meta-extensions-hibernate</artifactId>
+                        <version>${jooq.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>io.github.jklingsporn</groupId>
+                        <artifactId>vertx-jooq-generate</artifactId>
+                        <version>${vertx.jooq.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>javax.persistence</groupId>
+                        <artifactId>javax.persistence-api</artifactId>
+                        <version>2.2</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <generator>
+                        <name>io.github.jklingsporn.vertx.jooq.generate.classic.ClassicReactiveVertxGenerator</name>
+                        <database>
+                            <name>org.jooq.meta.extensions.jpa.JPADatabase</name>
+                            <properties>
+                    
+                                <!-- A comma separated list of Java packages, that contain your entities -->
+                                <property>
+                                    <key>packages</key>
+                                    <value>${package}.models</value>
+                                </property>
+                    
+                                <!-- Whether JPA 2.1 AttributeConverters should be auto-mapped to jOOQ Converters.
+                                     Custom <forcedType/> configurations will have a higher priority than these auto-mapped converters.
+                                     This defaults to true. -->
+                                <property>
+                                    <key>useAttributeConverters</key>
+                                    <value>true</value>
+                                </property>
+                    
+                                <!-- The default schema for unqualified objects:
 
-                                        <!-- A comma separated list of Java packages, that contain your entities -->
-                                        <property>
-                                            <key>packages</key>
-                                            <value>${package}.models</value>
-                                        </property>
+                                     - public: all unqualified objects are located in the PUBLIC (upper case) schema
+                                     - none: all unqualified objects are located in the default schema (default)
 
-                                        <!-- Whether JPA 2.1 AttributeConverters should be auto-mapped to jOOQ Converters.
-                                             Custom <forcedType/> configurations will have a higher priority than these auto-mapped converters.
-                                             This defaults to true. -->
-                                        <property>
-                                            <key>useAttributeConverters</key>
-                                            <value>true</value>
-                                        </property>
-
-                                        <!-- The default schema for unqualified objects:
-
-                                             - public: all unqualified objects are located in the PUBLIC (upper case) schema
-                                             - none: all unqualified objects are located in the default schema (default)
-
-                                             This configuration can be overridden with the schema mapping feature -->
-                                        <property>
-                                            <key>unqualifiedSchema</key>
-                                            <value>none</value>
-                                        </property>
-                                    </properties>
-                                </database>
-                                <target>
-                                    <packageName>${package}.data.access</packageName>
-                                    <encoding>UTF-8</encoding>
-                                    <clean>true</clean>
-                                </target>
-                            </generator>
-                        </configuration>
-                    </execution>
-                </executions>
+                                     This configuration can be overridden with the schema mapping feature -->
+                                <property>
+                                    <key>unqualifiedSchema</key>
+                                    <value>none</value>
+                                </property>
+                            </properties>
+                        </database>
+                        <target>
+                            <packageName>${package}.data.access</packageName>
+                            <encoding>UTF-8</encoding>
+                            <clean>true</clean>
+                        </target>
+                        <generate>
+                            <interfaces>true</interfaces>
+                            <daos>true</daos>
+                            <fluentSetters>true</fluentSetters>
+                        </generate>
+                        <strategy>
+                            <name>io.github.jklingsporn.vertx.jooq.generate.VertxGeneratorStrategy</name>
+                        </strategy>
+                    </generator>
+                </configuration>
             </plugin>
         </plugins>
     </build>

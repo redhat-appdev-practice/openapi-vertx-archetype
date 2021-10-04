@@ -29,7 +29,7 @@
       <defaultValue>6.3.0</defaultValue>
     </requiredProperty>
     <requiredProperty key="jooq_version">
-      <defaultValue>3.15.2</defaultValue>
+      <defaultValue>3.15.3</defaultValue>
     </requiredProperty>
     <requiredProperty key="hibernate_reactive_version">
       <defaultValue>1.0.0.CR9</defaultValue>
