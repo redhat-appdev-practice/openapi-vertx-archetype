@@ -67,6 +67,12 @@
     </module>
     <module id="${rootArtifactId}-data-access" dir="modules/data-access" name="${rootArtifactId}-data-access">
       <fileSets>
+        <fileSet encoding="UTF-8">
+          <directory>src/main/templates</directory>
+          <includes>
+            <include>*.mustache</include>
+          </includes>
+        </fileSet>
       </fileSets>
     </module>
     <module id="${rootArtifactId}-api" dir="modules/api" name="${rootArtifactId}-api">

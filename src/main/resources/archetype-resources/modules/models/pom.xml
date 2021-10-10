@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>${groupId}.models</groupId>
-    <artifactId>${artifactId}</artifactId>
+    <artifactId>${rootArtifactId}-models</artifactId>
     <packaging>jar</packaging>
     <name>${artifactId}</name>
     <version>${version}</version>
@@ -122,13 +122,6 @@
                             <artifactId>${project.artifactId}-models</artifactId>
                             <artifactVersion>${project.version}</artifactVersion>
                             <templateDirectory>templates</templateDirectory>
-                            <generateApis>false</generateApis>
-                            <generateAliasAsModel>false</generateAliasAsModel>
-                            <generateApiDocumentation>false</generateApiDocumentation>
-                            <generateModelDocumentation>false</generateModelDocumentation>
-                            <generateModelTests>false</generateModelTests>
-                            <generateModels>true</generateModels>
-                            <generateSupportingFiles>false</generateSupportingFiles>
                             <output>./</output>
                             <skipOverwrite>false</skipOverwrite>
                             <inputSpec>${project.basedir}/../api/src/main/resources/openapi.yml</inputSpec>

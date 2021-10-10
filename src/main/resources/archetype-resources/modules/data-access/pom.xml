@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>${groupId}.data</groupId>
-    <artifactId>${artifactId}</artifactId>
+    <artifactId>${rootArtifactId}-data</artifactId>
     <packaging>jar</packaging>
     <name>${artifactId}</name>
     <version>${version}</version>
@@ -13,42 +13,69 @@
         <version>${version}</version>
     </parent>
     
-    <properties>
-        <jooq.version>${jooq_version}</jooq.version>
-        <vertx.jooq.version>${jooq_vertx_version}</vertx.jooq.version>
-    </properties>
-    
     <dependencies>
-        <dependency>
-            <groupId>${groupId}.models</groupId>
-            <artifactId>${rootArtifactId}-models</artifactId>
-            <version>${version}</version>
-        </dependency>
         <dependency>
             <groupId>io.github.jklingsporn</groupId>
             <artifactId>vertx-jooq-classic-reactive</artifactId>
             <version>${vertx.jooq.version}</version>
         </dependency>
     </dependencies>
+    
+    <properties>
+        <jooq.version>${jooq_version}</jooq.version>
+        <vertx.jooq.version>${jooq_vertx_version}</vertx.jooq.version>
+    </properties>
 
     <build>
         <plugins>
             <plugin>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <groupId>org.openapitools</groupId>
+                <version>5.2.0</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <generatorName>mysql-schema</generatorName>
+                            <output>${project.build.directory}/schema/</output>
+                            <skipOverwrite>false</skipOverwrite>
+                            <inputSpec>${project.basedir}/../api/src/main/resources/openapi.yml</inputSpec>
+                            <generateSupportingFiles>false</generateSupportingFiles>
+                            <generateModels>false</generateModels>
+                            <generateApis>false</generateApis>
+                            <generateAliasAsModel>false</generateAliasAsModel>
+                            <generateApiDocumentation>true</generateApiDocumentation>
+                            <generateModelDocumentation>false</generateModelDocumentation>
+                            <generateModelTests>false</generateModelTests>
+                            <templateDirectory>${project.basedir}/src/main/templates</templateDirectory>
+                            <configOptions>
+                                <identifierNamingConvention>snake_case</identifierNamingConvention>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
-                <version>${jooq_version}</version>
+                <version>${jooq.version}</version>
                 <dependencies>
                     <dependency>
-                        <!-- Use org.jooq            for the Open Source Edition
-                                 org.jooq.pro        for commercial editions,
-                                 org.jooq.pro-java-8 for commercial editions with Java 8 support,
-                                 org.jooq.pro-java-6 for commercial editions with Java 6 support,
-                                 org.jooq.trial      for the free trial edition
-            
+                        <!-- Use org.jooq                for the Open Source Edition
+                                 org.jooq.pro            for commercial editions with Java 17 support,
+                                 org.jooq.pro-java-11    for commercial editions with Java 11 support,
+                                 org.jooq.pro-java-8     for commercial editions with Java 8 support,
+                                 org.jooq.trial          for the free trial edition with Java 17 support,
+                                 org.jooq.trial-java-11  for the free trial edition with Java 11 support,
+                                 org.jooq.trial-java-8   for the free trial edition with Java 8 support
+                                 
                              Note: Only the Open Source Edition is hosted on Maven Central.
                                    Import the others manually from your distribution -->
                         <groupId>org.jooq</groupId>
-                        <artifactId>jooq-meta-extensions-hibernate</artifactId>
+                        <artifactId>jooq-meta-extensions</artifactId>
                         <version>${jooq.version}</version>
                     </dependency>
                     <dependency>
@@ -56,42 +83,76 @@
                         <artifactId>vertx-jooq-generate</artifactId>
                         <version>${vertx.jooq.version}</version>
                     </dependency>
-                    <dependency>
-                        <groupId>javax.persistence</groupId>
-                        <artifactId>javax.persistence-api</artifactId>
-                        <version>2.2</version>
-                    </dependency>
                 </dependencies>
                 <configuration>
                     <generator>
                         <name>io.github.jklingsporn.vertx.jooq.generate.classic.ClassicReactiveVertxGenerator</name>
                         <database>
-                            <name>org.jooq.meta.extensions.jpa.JPADatabase</name>
+                            <name>org.jooq.meta.extensions.ddl.DDLDatabase</name>
                             <properties>
-                    
-                                <!-- A comma separated list of Java packages, that contain your entities -->
+                
+                                <!-- Specify the location of your SQL script.
+                                     You may use ant-style file matching, e.g. /path/**/to/*.sql
+                                     
+                                     Where:
+                                     - ** matches any directory subtree
+                                     - * matches any number of characters in a directory / file name
+                                     - ? matches a single character in a directory / file name -->
                                 <property>
-                                    <key>packages</key>
-                                    <value>${package}.models</value>
+                                    <key>scripts</key>
+                                    <value>${project.build.directory}/schema/*.sql</value>
                                 </property>
-                    
-                                <!-- Whether JPA 2.1 AttributeConverters should be auto-mapped to jOOQ Converters.
-                                     Custom <forcedType/> configurations will have a higher priority than these auto-mapped converters.
-                                     This defaults to true. -->
+                
                                 <property>
-                                    <key>useAttributeConverters</key>
+                                    <key>parseDialect</key>
+                                    <value>POSTGRESQL</value>
+                                </property>
+                
+                                <property>
+                                    <key>parseWithMetaLookups</key>
                                     <value>true</value>
                                 </property>
-                    
+                
+                                <property>
+                                    <key>parseUnknownFunctions</key>
+                                    <value>IGNORE</value>
+                                </property>
+                
+                                <property>
+                                    <key>parseIgnoreComments</key>
+                                    <value>true</value>
+                                </property>
+                
+                                <!-- The sort order of the scripts within a directory, where:
+                                
+                                     - semantic: sorts versions, e.g. v-3.10.0 is after v-3.9.0 (default)
+                                     - alphanumeric: sorts strings, e.g. v-3.10.0 is before v-3.9.0
+                                     - flyway: sorts files the same way as flyway does
+                                     - none: doesn't sort directory contents after fetching them from the directory -->
+                                <property>
+                                    <key>sort</key>
+                                    <value>semantic</value>
+                                </property>
+                
                                 <!-- The default schema for unqualified objects:
-
+                        
                                      - public: all unqualified objects are located in the PUBLIC (upper case) schema
                                      - none: all unqualified objects are located in the default schema (default)
-
+                                     
                                      This configuration can be overridden with the schema mapping feature -->
                                 <property>
                                     <key>unqualifiedSchema</key>
                                     <value>none</value>
+                                </property>
+                
+                                <!-- The default name case for unquoted objects:
+                                
+                                     - as_is: unquoted object names are kept unquoted
+                                     - upper: unquoted object names are turned into upper case (most databases)
+                                     - lower: unquoted object names are turned into lower case (e.g. PostgreSQL) -->
+                                <property>
+                                    <key>defaultNameCase</key>
+                                    <value>as_is</value>
                                 </property>
                             </properties>
                         </database>
@@ -104,6 +165,9 @@
                             <interfaces>true</interfaces>
                             <daos>true</daos>
                             <fluentSetters>true</fluentSetters>
+                            <generatedAnnotation>true</generatedAnnotation>
+                            <generatedAnnotationType>DETECT_FROM_JDK</generatedAnnotationType>
+                            <generatedAnnotationDate>true</generatedAnnotationDate>
                         </generate>
                         <strategy>
                             <name>io.github.jklingsporn.vertx.jooq.generate.VertxGeneratorStrategy</name>
@@ -112,7 +176,7 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <phase>generate-sources</phase>
+                        <phase>process-sources</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>

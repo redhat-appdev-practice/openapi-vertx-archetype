@@ -232,6 +232,15 @@ components:
                     type: string
                     x-java-field-annotations:
                         - '@javax.persistence.Id'
+                    x-mysql-schema:
+                        columnDefinition:
+                            colName: username
+                            colDataType: VARCHAR
+                            colDataTypeArguments:
+                                - argumentValue: 128
+                                  isString: false
+                                  hasMore: false
+                            primaryKey: true
                 givenName:
                     type: string
                 familyName:
@@ -261,6 +270,15 @@ components:
                         - '@javax.persistence.Id'
                         - '@javax.persistence.GeneratedValue(generator = "UUID")'
                         - '@javax.persistence.Column(name = "id", updatable = false, nullable = false)'
+                    x-mysql-schema:
+                        columnDefinition:
+                            colName: id
+                            colDataType: VARCHAR
+                            colDataTypeArguments:
+                                - argumentValue: 40
+                                  isString: false
+                                  hasMore: false
+                            primaryKey: true
                 title:
                     type: string
                 description:
