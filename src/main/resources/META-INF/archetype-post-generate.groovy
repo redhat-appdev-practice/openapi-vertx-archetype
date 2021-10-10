@@ -81,38 +81,51 @@ if (contractUri.toLowerCase().endsWith('json')) {
   writer.close()
 }
 
-if (dbLibrary.contentEquals("hibernate")) {
-  Path dataAccess = Paths.get(projectPath.toAbsolutePath().toString(), "modules", "data-access")
-  dataAccess.toFile().deleteDir()
+def deleteModule = "";
+switch (dbLibrary.toLowerCase()) {
+  case "hibernate":
+    deleteModule = 'modules/data-access'
+    break
+  case "jooq":
+    deleteModule = 'modules/models'
+    break
+  default:
+    deleteModule = 'modules/models'
+    break
 
-  def parentPom = Paths.get(projectPath.toAbsolutePath().toString(), "pom.xml").toFile()
-  def sb = new StringBuilder();
+}
 
-  // Read parent pom and skip module line for `data-access`
-  Scanner sc
-  try {
-    sc = new Scanner(parentPom)
-    String currentLine
-    while(sc.hasNext()){
-      currentLine = sc.nextLine()
-      if(currentLine.contains("<module>modules/data-access</module>")){
-        continue
-      }
-      if (currentLine.trim().length()==0) {
-        continue
-      }
+Path moduleToDelete = Paths.get(projectPath.toAbsolutePath().toString(), deleteModule)
+moduleToDelete.toFile().deleteDir()
+
+def parentPom = Paths.get(projectPath.toAbsolutePath().toString(), "pom.xml").toFile()
+def sb = new StringBuilder();
+
+// Read parent pom and skip module line for `data-access`
+Scanner sc
+try {
+  sc = new Scanner(parentPom)
+  String currentLine
+  while(sc.hasNext()){
+    currentLine = sc.nextLine()
+
+    if(currentLine.trim().strip().contains(deleteModule)){
+      continue
+    } else if (currentLine.trim().length()==0) {
+      continue
+    } else if (!currentLine.endsWith("\n")) {
       sb.append(currentLine).append("\n")
     }
-  } finally {
-    sc.close()
   }
-
-  // Empty the parent pom file
-  PrintWriter pw = new PrintWriter(parentPom)
-  pw.close()
-
-  // Write the modified parent pom
-  BufferedWriter writer = new BufferedWriter(new FileWriter(parentPom, true))
-  writer.write(sb.toString())
-  writer.close()
+} finally {
+  sc.close()
 }
+
+// Empty the parent pom file
+PrintWriter pw = new PrintWriter(parentPom)
+pw.close()
+
+// Write the modified parent pom
+BufferedWriter writer = new BufferedWriter(new FileWriter(parentPom, true))
+writer.write(sb.toString())
+writer.close()
