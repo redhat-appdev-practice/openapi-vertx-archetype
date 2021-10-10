@@ -7,8 +7,8 @@
     <version>${version}</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
-  <groupId>${groupId}.data</groupId>
-  <artifactId>${artifactId}</artifactId>
+  <groupId>${groupId}.api</groupId>
+  <artifactId>${rootArtifactId}-api</artifactId>
   <version>${version}</version>
   <name>${artifactId}</name>
   <properties>
@@ -32,16 +32,37 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
+#if($openapi_app_database_library == "hibernate")
     <dependency>
       <groupId>${groupId}.models</groupId>
       <artifactId>${rootArtifactId}-models</artifactId>
       <version>${version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-jpamodelgen</artifactId>
+      <version>RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate.reactive</groupId>
+      <artifactId>hibernate-reactive-core</artifactId>
+      <version>${hibernate_reactive_version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+    </dependency>
+#end
 #if($openapi_app_database_library == "jooq")
     <dependency>
       <groupId>${groupId}.data</groupId>
-      <artifactId>${rootArtifactId}-data-access</artifactId>
+      <artifactId>${rootArtifactId}-data</artifactId>
       <version>${version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.github.jklingsporn</groupId>
+      <artifactId>vertx-jooq-classic-reactive</artifactId>
+      <version>${jooq_vertx_version}</version>
     </dependency>
 #end
     <dependency>
@@ -96,28 +117,6 @@
       <groupId>io.smallrye.reactive</groupId>
       <artifactId>smallrye-mutiny-vertx-web-openapi</artifactId>
       <version>${mutiny.version}</version>
-    </dependency>
-#end
-#if(${openapi_app_database_library}=="jooq")
-    <dependency>
-      <groupId>io.github.jklingsporn</groupId>
-      <artifactId>vertx-jooq-classic-reactive</artifactId>
-      <version>${jooq_vertx_version}</version>
-    </dependency>
-#else
-    <dependency>
-      <groupId>org.hibernate.reactive</groupId>
-      <artifactId>hibernate-reactive-core</artifactId>
-      <version>${hibernate_reactive_version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-jpamodelgen</artifactId>
-      <version>RELEASE</version>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-annotations</artifactId>
     </dependency>
 #end
   </dependencies>
