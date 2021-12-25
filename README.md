@@ -23,7 +23,7 @@ In order to avoid wasting your time and ours, it is recommended that you submit 
 ```bash
 mvn archetype:generate -DarchetypeGroupId=com.redhat.consulting \
                        -DarchetypeArtifactId=openapi-vertx-archetype \
-                       -DarchetypeVersion=1.0.13 \
+                       -DarchetypeVersion=1.0.15 \
                        -Dpackage=com.redhat.runtimes \
                        -DgroupId=com.redhat.runtimes.vertx \
                        -DartifactId=openapi-vertx-todo \
