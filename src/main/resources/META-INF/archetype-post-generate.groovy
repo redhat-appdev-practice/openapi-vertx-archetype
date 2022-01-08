@@ -81,6 +81,8 @@ if (contractUri.toLowerCase().endsWith('json')) {
   writer.close()
 }
 
+println "#########  DB LIBRARY: ${dbLibrary}"
+
 def deleteModule = "";
 switch (dbLibrary.toLowerCase()) {
   case "hibernate":

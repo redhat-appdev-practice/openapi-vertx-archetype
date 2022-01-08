@@ -79,7 +79,7 @@
                             <goal>checkout</goal>
                         </goals>
                         <configuration>
-                            <connectionUrl>scm:git:https://github.com/redhat-appdev-practice/hibernate-openapi-templates.git</connectionUrl>
+                            <connectionUrl>scm:git:https://github.com/redhat-appdev-practice/openapi-generator-quarkus-templates.git</connectionUrl>
                             <checkoutDirectory>templates</checkoutDirectory>
                             <connectionType>connection</connectionType>
                             <scmVersion>trunk</scmVersion>
@@ -116,8 +116,8 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <library>spring-boot</library>
+                            <generatorName>jaxrs-spec</generatorName>
+                            <library>quarkus</library>
                             <groupId>${project.groupId}.models</groupId>
                             <artifactId>${project.artifactId}-models</artifactId>
                             <artifactVersion>${project.version}</artifactVersion>
@@ -128,12 +128,15 @@
                             <configOptions>
                                 <dateLibrary>java8-localdatetime</dateLibrary>
                                 <modelPackage>${package}.models</modelPackage>
+                                <invokerPackage>${package}</invokerPackage>
+                                <apiPackage>${package}.api</apiPackage>
                                 <parentArtifactId>${project.artifactId}</parentArtifactId>
                                 <parentGroupId>${project.groupId}</parentGroupId>
                                 <parentVersion>${project.version}</parentVersion>
                                 <serializableModel>true</serializableModel>
                                 <sortParamsByRequiredFlag>true</sortParamsByRequiredFlag>
                                 <useOptional>true</useOptional>
+                                <generatePom>false</generatePom>
                             </configOptions>
                         </configuration>
                     </execution>

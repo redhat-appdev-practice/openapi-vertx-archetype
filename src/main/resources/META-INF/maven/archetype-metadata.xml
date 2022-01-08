@@ -61,6 +61,7 @@
           <directory></directory>
           <includes>
             <include>README.md</include>
+            <include>.openapi-generator-ignore</include>
           </includes>
         </fileSet>
       </fileSets>
