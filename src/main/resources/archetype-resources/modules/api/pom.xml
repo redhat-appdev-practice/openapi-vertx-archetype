@@ -43,7 +43,7 @@
       <artifactId>hibernate-jpamodelgen</artifactId>
       <version>RELEASE</version>
     </dependency>
-    <dependency>
+    <dependency> <!-- http://hibernate.org/reactive/documentation/1.0/reference/html_single/ -->
       <groupId>org.hibernate.reactive</groupId>
       <artifactId>hibernate-reactive-core</artifactId>
       <version>${hibernate_reactive_version}</version>
@@ -51,6 +51,11 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.32</version>
     </dependency>
 #end
 #if($openapi_app_database_library == "jooq")
