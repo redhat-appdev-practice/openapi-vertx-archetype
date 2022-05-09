@@ -81,24 +81,22 @@ if (contractUri.toLowerCase().endsWith('json')) {
   writer.close()
 }
 
-println "#########  DB LIBRARY: ${dbLibrary}"
+def deleteModule = ''
 
-def deleteModule = "";
-switch (dbLibrary.toLowerCase()) {
-  case "hibernate":
-    deleteModule = 'modules/data-access'
-    break
-  case "jooq":
-    deleteModule = 'modules/models'
-    break
-  default:
-    deleteModule = 'modules/models'
-    break
-
+// When using Hibernate, delete the jOOQ query DSL module
+if (dbLibrary.trim().compareToIgnoreCase('hibernate') == 0) {
+  deleteModule = 'modules/data-access'
+  Paths.get(projectPath.toAbsolutePath().toString(), deleteModule)
+    .toFile()
+    .deleteDir()
 }
 
-Path moduleToDelete = Paths.get(projectPath.toAbsolutePath().toString(), deleteModule)
-moduleToDelete.toFile().deleteDir()
+// When using jOOQ, delete the Hibernate persistence.xml file
+if (dbLibrary.trim().compareToIgnoreCase('jooq') == 0) {
+  Paths.get(projectPath.toAbsolutePath().toString(), 'modules/api/src/main/resources/META-INF')
+    .toFile()
+    .deleteDir()
+}
 
 def parentPom = Paths.get(projectPath.toAbsolutePath().toString(), "pom.xml").toFile()
 def sb = new StringBuilder();
